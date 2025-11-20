@@ -26,7 +26,6 @@ from tabulate import tabulate
 def render_table(headers: list[str], rows: list[Mapping[str, Any]]) -> str:
     table_data = [[_format_cell(h, r.get(h, "")) for h in headers] for r in rows]
 
-    # Ключевой фикс: явно задаём выравнивание по колонкам
     colalign = tuple("right" if h == "performance" else "left" for h in headers)
 
     return tabulate(
@@ -35,6 +34,6 @@ def render_table(headers: list[str], rows: list[Mapping[str, Any]]) -> str:
         tablefmt="github",
         stralign="left",
         numalign="right",
-        disable_numparse=True,   # сохраняем "4.80"
-        colalign=colalign,       # <-- правим заголовок и значения в колонке
+        disable_numparse=True,
+        colalign=colalign,
     )

@@ -36,7 +36,7 @@ def build_report(report_name: str, files: list[Path]) -> tuple[list[str], list[d
     """
     rows = read_csv_files(files)
 
-    report_cls = registry.get(report_name)  # может бросить ReportNotFound
+    report_cls = registry.get(report_name)
     report = report_cls()
 
     headers = report.headers()

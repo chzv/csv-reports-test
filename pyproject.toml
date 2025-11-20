@@ -37,5 +37,4 @@ select = [
   "B",  # bugbear
   "W",  # pycodestyle warnings
 ]
-# Можно точечно отключать правила при необходимости:
-# ignore = []
+

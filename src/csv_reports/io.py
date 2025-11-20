@@ -16,7 +16,6 @@ from .models import EmployeeRow
 
 __all__ = ["read_csv_files"]
 
-# Обязательные колонки в точном соответствии с форматом входных данных
 REQUIRED_COLUMNS: set[str] = {
     "name",
     "position",
@@ -45,7 +44,6 @@ def _coerce_row(raw: dict[str, str]) -> EmployeeRow:
         team = _normalize_text(raw["team"])
 
         completed_tasks = int(_normalize_text(raw["completed_tasks"]))
-        # Числа в формате '4.8' -> float; если вдруг встретится локальная запятая, поддержим
         perf_str = _normalize_text(raw["performance"]).replace(",", ".")
         performance = float(perf_str)
 
@@ -99,17 +97,14 @@ def read_csv_files(paths: List[Path]) -> list[EmployeeRow]:
 
     for path in paths:
         try:
-            # По умолчанию utf-8; newline="" — рекомендовано модулем csv
             with path.open("r", encoding="utf-8", newline="") as fh:
                 reader = csv.DictReader(fh)
                 _validate_header(reader.fieldnames, path)
 
                 for raw in reader:
-                    # DictReader возвращает строки; приводим к типам и нормализуем
                     rows.append(_coerce_row(raw))
 
         except FileNotFoundError as exc:
-            # CLI обычно проверяет существование, но дублируем защиту в слое I/O
             raise DataReadError(f"Файл не найден: {path}") from exc
         except UnicodeDecodeError as exc:
             raise DataReadError(f"Ошибка декодирования файла {path}: ожидается UTF-8") from exc

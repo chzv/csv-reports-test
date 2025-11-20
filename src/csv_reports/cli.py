@@ -19,7 +19,6 @@ import sys
 from pathlib import Path
 from typing import Iterable
 
-# Гарантируем выполнение побочных импортов внутри пакета (регистрация отчётов)
 import csv_reports as _pkg  # noqa: F401
 
 from .errors import CsvReportsError, ReportNotFound
@@ -57,7 +56,6 @@ def _build_parser() -> argparse.ArgumentParser:
             help="Report name to generate (dynamic choices).",
         )
     else:
-        # Теоретически реестр пуст — позволяем любую строку, позже вернём ошибку.
         parser.add_argument(
             "--report",
             required=True,
@@ -72,7 +70,6 @@ def main(argv: list[str] | None = None) -> None:
     try:
         args = parser.parse_args(argv)
     except SystemExit:
-        # argparse уже напечатал ошибку и выставил код 2
         raise
 
     _, missing = _existing_files(args.files)
@@ -84,7 +81,6 @@ def main(argv: list[str] | None = None) -> None:
     try:
         headers, rows = build_report(report_name=args.report, files=args.files)
     except ReportNotFound:
-        # На случай если choices не применились или отчёт не зарегистрирован
         print(f"Ошибка: неизвестный отчёт '{args.report}'", file=sys.stderr)
         sys.exit(1)
     except CsvReportsError as e:

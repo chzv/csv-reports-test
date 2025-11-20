@@ -62,5 +62,4 @@ class ReportRegistry:
         return sorted(self._registry.keys())
 
 
-# Глобальный экземпляр реестра, используемый по всему пакету.
 registry = ReportRegistry()

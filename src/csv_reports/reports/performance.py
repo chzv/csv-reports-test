@@ -28,7 +28,6 @@ class PerformanceReport(Report):
         buckets: dict[str, list[float]] = defaultdict(list)
 
         for r in rows:
-            # EmployeeRow гарантирует наличие и типы полей
             buckets[r["position"]].append(r["performance"])
 
         aggregates: List[Dict[str, Any]] = []

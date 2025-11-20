@@ -1,15 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Executable shim that forwards to the package CLI.
 
-It enables both:
-  - `python main.py --files ... --report performance`
-  - `python -m csv_reports --files ... --report performance`
-
-When run directly from the project root, it ensures the `src/` directory is on
-`sys.path` so the `csv_reports` package can be imported without installation.
-"""
 from __future__ import annotations
 
 import os

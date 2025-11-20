@@ -20,7 +20,6 @@ __all__ = ["Report"]
 class Report(ABC):
     """Абстрактный базовый класс отчёта."""
 
-    #: Машинное имя отчёта (используется в CLI и реестре).
     name: ClassVar[str]
 
     @abstractmethod
